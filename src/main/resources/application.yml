@@ -1,0 +1,67 @@
+server:
+  port: 5000
+spring:
+  datasource:                      #数据库连接池
+    one:
+      driver-class-name: com.mysql.jdbc.Driver
+      username: root
+      password: root
+      jdbc-url: jdbc:mysql:///homecrud?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+      type: com.alibaba.druid.pool.DruidDataSource
+    two:              #配置数据源2
+      driver-class-name: com.mysql.jdbc.Driver
+      jdbc-url: jdbc:mysql:///lianxi?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+      username: root
+      password: root
+      type: com.alibaba.druid.pool.DruidDataSource
+    three:              #配置数据源3
+      driver-class-name: com.mysql.jdbc.Driver
+      jdbc-url: jdbc:mysql:///cs?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+      username: root
+      password: root
+      type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      #最大活跃数
+      maxActive: 20
+      #初始化数量
+      initialSize: 1
+      #最大连接等待超时时间
+      maxWait: 60000
+      #打开PSCache，并且指定每个连接PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      #通过connectionProperties属性来打开mergeSql功能；慢SQL记录
+      #connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 1 from dual
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      #配置监控统计拦截的filters，去掉后监控界面sql将无法统计,'wall'用于防火墙
+      filters: stat, wall, log4j
+  # 分布式锁
+  jta:
+    # log-dir: classpath*:tx-logs
+    transaction-manager-id: txManager
+# mybatis-plus相关配置
+#mybatis-plus:
+#  # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+#  mapper-locations: classpath:com/leilei/mapper/one/*.xml,classpath:com/leilei/mapper/two/*.xml,classpath:com/leilei/mapper/three/*.xml
+#  # 以下配置均有默认值,可以不设置
+#  global-config:
+#    db-config:
+#      #主键类型  auto:"数据库ID自增" 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+#      id-type: auto
+#      #字段策略 IGNORED:"忽略判断"  NOT_NULL:"非 NULL 判断")  NOT_EMPTY:"非空判断"
+#      field-strategy: NOT_EMPTY
+#      #数据库类型
+#      db-type: MYSQL
+#  configuration:
+#    # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
+#    map-underscore-to-camel-case: true
+#    # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
+#    call-setters-on-nulls: true
+#    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

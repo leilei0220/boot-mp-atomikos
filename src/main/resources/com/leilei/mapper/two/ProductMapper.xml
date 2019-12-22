@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leilei.mapper.two.ProductMapper">
+
+<!--    &lt;!&ndash; 开启二级缓存 &ndash;&gt;-->
+<!--    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>-->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.leilei.domain.Product">
+        <id column="id" property="id" />
+        <result column="product_name" property="productName" />
+        <result column="category_id" property="categoryId" />
+        <result column="sale_price" property="salePrice" />
+        <result column="supplier" property="supplier" />
+        <result column="brand" property="brand" />
+        <result column="cutoff" property="cutoff" />
+        <result column="cost_price" property="costPrice" />
+    </resultMap>
+    <select id="selectByPage" resultMap="BaseResultMap">
+        select * from product
+        <where>
+            <if test="name!=null and name!=''">
+                and product_name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+
+</mapper>
